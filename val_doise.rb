@@ -8,10 +8,8 @@ require 'open-uri'
 # #OBTENIR L'ADRESSE EMAIL DE VAUREAL
 def get_the_email_of_a_townhal_from_its_webpage
 doc = Nokogiri::HTML(open("http://annuaire-des-mairies.com/95/vaureal.html"))
-	doc.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]')
-	puts node.text
-	end
-
+	email = doc.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]')
+	puts email
 end
 get_the_email_of_a_townhal_from_its_webpage
 
@@ -21,12 +19,6 @@ def get_all_the_urls_of_val_doise_townhalls
 	puts doc.xpath('//a[@class = "lientxt"]/@href')
 end
 get_all_the_urls_of_val_doise_townhalls
-
-#TESTRATÉ
-# def i_need_to_check_page(url)
-# doc = Nokogiri::HTML(open('#{url}'))
-# 	doc.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]')
-# end
 
 def get_all_the_urls_of_val_doise_townhalls
 

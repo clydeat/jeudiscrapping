@@ -12,7 +12,6 @@ def road_of_deputy
 	
 	doc = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
 	link_deputy_to_check = doc.xpath('//ul[@class="col3"]//a/@href')
-
 	link_deputy_to_check.each do |one_link|
 
 	#recupérer le first name et last name
@@ -24,27 +23,33 @@ def road_of_deputy
 
 
 		doc = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/#{one_link}"))
-		emails_deputy << doc.xpath('//*[@id="haut-contenu-page"]/article/div[3]/div/dl/dd[4]/ul/li[1]/a')
+		emails_deputy = doc.xpath('//*[@id="haut-contenu-page"]/article/div[3]/div/dl/dd[4]/ul/li[1]/a')
+
+		emails_of_deputy = emails_deputy.to_s.delete_prefix("<a href=\"mailto:")
+
 		all_first_and_last_name = doc.xpath('//*[@id="haut-contenu-page"]/article/div[2]/h1')
 		all_first_and_last_name = all_first_and_last_name.to_s.delete_prefix("<h1>")
 		all_first_and_last_name = all_first_and_last_name.to_s.delete_prefix("M.")
 		all_first_and_last_name = all_first_and_last_name.to_s.delete_prefix("Mme")
 		all_first_and_last_name = all_first_and_last_name.to_s.delete_suffix("</h1>")
-		
+		# href = emails_deputy.css("a").first["href"]
+
+
 
 		# J'AI 
 		all_first_and_last_name = all_first_and_last_name.split(" ")
 
 		first_name = all_first_and_last_name.drop(1)
-		last_name = all_first_and_last_name.drop_while{|i| i>1}
+		# last_name = all_first_and_last_name.drop_while{|i| i>1}
 		# puts all_first_and_last_name
-		puts las
+		# p first_name
+		
+		my_final_hash_of_asshole = all_first_and_last_name.zip(emails_deputy)
+	# 	my_deputy_hash_with_beautiful_name = first_name.zip(last_name)
+	# 	my_final_hash_of_asshole = my_deputy_hash_with_beautiful_name.zip(emails_deputy)
 
-		my_deputy_hash_with_beautiful_name = first_name.zip(last_name)
-		my_final_hash_of_asshole = my_deputy_hash_with_beautiful_name.zip(emails_deputy)
 
-
-	# puts my_final_hash_of_asshole
+	puts my_final_hash_of_asshole
 	end
 end
 road_of_deputy
